@@ -14,7 +14,7 @@ jobs:
             node-version: [12.x] # Resolves node versioning issues (can have many versions to iterate through)
       steps:
         # ea. dash defines 1 step, second step has many lines
-        - uses: action/checkout@v1 # Very common
+        - uses: actions/checkout@v1 # Very common
         - name: Use Node version ${{ matrix.node-version }} # name just has to be readable to you. install node version defined above, yml vars accessed via 'matrix'
         uses: actions/setup-node@v1 # action version number, action means default market
         with: 
@@ -28,4 +28,9 @@ jobs:
             REACT_APP_MAPBOX_API: ${{ secrets.MAPBOX_API }} # don't add api key directly
         - name: Build the APP
           run: npm run build
+        - name: Deploy to Github Pages
+          uses:  peaceiris/actions-gh-pages@v3
+          with:
+            deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+            publish_dir: ./build #will exist in ci/cd, not in local
 
