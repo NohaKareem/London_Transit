@@ -28,5 +28,4 @@ jobs:
             REACT_APP_MAPBOX_API: ${{ secrets.MAPBOX_API }} # don't add api key directly
         - name: Build the APP
           run: npm run build
-        - name: Build the APP
 
