@@ -1,0 +1,32 @@
+name: Deploy London Transit project
+on:
+    push: 
+        branches:
+          # For testing only, remove when done
+          - "ci-cd"
+          - main
+
+jobs: 
+  deploy:
+      runs-on: ubuntu-latest
+      strategy:
+          matrix:
+            node-version: [12.x] # Resolves node versioning issues (can have many versions to iterate through)
+      steps:
+        # ea. dash defines 1 step, second step has many lines
+        - uses: action/checkout@v1 # Very common
+        - name: Use Node version ${{matrix.node-version}} # name just has to be readable to you. install node version defined above, yml vars accessed via 'matrix'
+        uses: actions/setup-node@v1 # action version number, action means default market
+        with: 
+          node-version: ${{ matrix.node-version }}
+        - name: Install Packages
+          run: npm install
+        - name: Set Env Variables
+          run: allenevans/set-env@v2.0.0 # 3rd party package ence not action
+          with:
+            GENERATE_SOURCEMAP: false
+            REACT_APP_MAPBOX_API: ${{ secrets.MAPBOX_API }} # don't add api key directly
+        - name: Build the APP
+          run: npm run build
+        - name: Build the APP
+
