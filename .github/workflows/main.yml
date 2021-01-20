@@ -16,9 +16,9 @@ jobs:
         # ea. dash defines 1 step, second step has many lines
         - uses: actions/checkout@v1 # Very common
         - name: Use Node version ${{ matrix.node-version }} # name just has to be readable to you. install node version defined above, yml vars accessed via 'matrix'
-        uses: actions/setup-node@v1 # action version number, action means default market
-        with: 
-          node-version: ${{ matrix.node-version }}
+          uses: actions/setup-node@v1 # action version number, action means default market
+          with: 
+            node-version: ${{ matrix.node-version }}
         - name: Install Packages
           run: npm install
         - name: Set Env Variables
